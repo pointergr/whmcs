@@ -5,12 +5,12 @@
 3. Επεξεργαζόμαστε το αρχείο /includes/whoisservers.php και ελέγχουμε αν υπάρχουν γραμμές που ξεκινούν με τις καταλήξεις: .gr, .com.gr, .net.gr, .org.gr, .edu.gr, .gov.gr
 Αν υπάρχουν ήδη, αντικαθιστούμε τις γραμμές με τις παρακάτω, αλλιώς απλά προσθέτουμε τις πατακάτω στο τέλος του αρχείου.\
 ```
-.gr|http://www.pointer.gr/el/domain-names/publicwhois/|HTTPREQUEST-Domain does not exist.
-.com.gr|http://www.pointer.gr/el/domain-names/publicwhois/|HTTPREQUEST-Domain does not exist
-.net.gr|http://www.pointer.gr/el/domain-names/publicwhois/|HTTPREQUEST-Domain does not exist
-.org.gr|http://www.pointer.gr/el/domain-names/publicwhois/|HTTPREQUEST-Domain does not exist
-.edu.gr|http://www.pointer.gr/el/domain-names/publicwhois/|HTTPREQUEST-Domain does not exist
-.gov.gr|http://www.pointer.gr/el/domain-names/publicwhois/|HTTPREQUEST-Domain does not exist
+.gr|https://www.pointer.gr/el/domain-names/publicwhois/|HTTPREQUEST-Domain does not exist.
+.com.gr|https://www.pointer.gr/el/domain-names/publicwhois/|HTTPREQUEST-Domain does not exist
+.net.gr|https://www.pointer.gr/el/domain-names/publicwhois/|HTTPREQUEST-Domain does not exist
+.org.gr|https://www.pointer.gr/el/domain-names/publicwhois/|HTTPREQUEST-Domain does not exist
+.edu.gr|https://www.pointer.gr/el/domain-names/publicwhois/|HTTPREQUEST-Domain does not exist
+.gov.gr|https://www.pointer.gr/el/domain-names/publicwhois/|HTTPREQUEST-Domain does not exist
 ```
 
 4. Προσθέτουμε στο τέλος του αρχείου includes/additionaldomainfields.php τον παρακάτω κώδικα: 
