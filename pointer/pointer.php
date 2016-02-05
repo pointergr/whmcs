@@ -1588,11 +1588,10 @@ function logout($username, $password, $url, $key) {
 
 function getUrl($params) {
     $testmode = (isset($params["TestMode"]) && $params["TestMode"]) ? TRUE : FALSE;
-    $url = '';
     if ($testmode) {
         $url = "http://devpointer.ngrok.com/admin/reseller";
     } else {
-        $url = "http://admin.pointer.gr/reseller";
+        $url = "https://www.pointer.gr/api";
     }
     return $url;
 }
