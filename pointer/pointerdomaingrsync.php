@@ -15,7 +15,7 @@ $url = false;
 if ($testmode == 'on' || $testmode == 1) {
     $url = "http://devpointer.ngrok.com/admin/reseller";
 } else {
-    $url = "http://admin.pointer.gr/reseller";
+    $url = "https://www.pointer.gr/api";
 }
 
 $resp = call_user_func_array('login', array($username, $password, $url));
