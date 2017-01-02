@@ -16,7 +16,10 @@
 .gov.gr|https://www.pointer.gr/el/domain-names/publicwhois/|HTTPREQUEST-Domain does not exist
 ```
 
-4) Προσθέτουμε στο τέλος του αρχείου includes/additionaldomainfields.php τον παρακάτω κώδικα: 
+4) Ανεβάζουμε το αρχείο additionalfields.php στον φάκελο /resources/domains/
+
+[**Για εκδόσεις πριν την 7.0**]
+Προσθέτουμε στο τέλος του αρχείου includes/additionaldomainfields.php τον παρακάτω κώδικα: 
 ```php
 if (file_exists(dirname(__FILE__) . "/../modules/registrars/pointer/additionaldomainfields.php")) {
     include dirname(__FILE__) . "/../modules/registrars/pointer/additionaldomainfields.php";
