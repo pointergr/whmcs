@@ -9,6 +9,62 @@ function pointer_getConfigArray() {
     return $configarray;
 }
 
+function pointer_Sync($params) {
+
+    $username = $params["Username"];
+    $password = $params["Password"];
+    $domain = $params['domain'];
+    $key = '';
+    $url = getUrl($params);
+
+    $resp = call_user_func_array('login', array($username, $password, $url));
+    if ($resp['code'] != '200') {
+        $values["error"] = $resp['code'] . ' ' . $resp['message'];
+        call_user_func_array('logout', array($username, $password, $url, $key));
+        return $values;
+    }
+
+    $key = $resp['key'];
+
+    //GET DOMAIN INFO
+    $chksum = md5($username . $password . 'getInfoDomain' . $key);
+    $xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
+            <pointer>
+                <domain>
+                <get>
+                	<domain>{$domain}</domain>
+                </get>
+                </domain>
+                <username>{$username}</username>
+                <chksum>{$chksum}</chksum>
+            </pointer>";
+
+    $curl = curl_init();
+    curl_setopt($curl, CURLOPT_URL, $url);
+    curl_setopt($curl, CURLOPT_HTTPHEADER, Array("Content-Type:text/xml"));
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($curl, CURLOPT_HEADER, 0);
+    curl_setopt($curl, CURLOPT_POST, 1);
+    curl_setopt($curl, CURLOPT_POSTFIELDS, $xml); // post the xml
+    curl_setopt($curl, CURLOPT_TIMEOUT, 120); // set timeout in secon
+    $result = curl_exec($curl);
+
+    $resp_xml = new SimpleXMLElement($result);
+
+    $active = (int)$resp_xml->domain->active;
+    $expired = (int)$resp_xml->domain->expired;
+    $expiryDate = (int)$resp_xml->domain->end_date;
+
+    call_user_func_array('logout', array($username, $password, $url, $key));
+
+    return array(
+        'active' => ($active) ? true : false,
+        'expired' => ($expired) ? true : false,
+        'expirydate' => date('Y-m-d', $expiryDate)
+    );
+
+}
+
 function pointer_GetNameservers($params) {
     $username = $params["Username"];
     $password = $params["Password"];
