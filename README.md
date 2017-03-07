@@ -4,9 +4,9 @@
 
 3) Έχουμε δύο περιπτώσεις ανάλογα με την έκδοση του whmcs: 
 
-Για εκδόσεις από 7.0 και άνω: Ανεβάζουμε το αρχείο whois.json στον φάκελο /resources/domains/
+-Για εκδόσεις από 7.0 και άνω: Ανεβάζουμε το αρχείο whois.json στον φάκελο /resources/domains/
 
-Για εκδόσεις πριν την 7.0: Επεξεργαζόμαστε το αρχείο /includes/whoisservers.php και ελέγχουμε αν υπάρχουν γραμμές που ξεκινούν με τις καταλήξεις: .gr, .com.gr, .net.gr, .org.gr, .edu.gr, .gov.gr
+-Για εκδόσεις πριν την 7.0: Επεξεργαζόμαστε το αρχείο /includes/whoisservers.php και ελέγχουμε αν υπάρχουν γραμμές που ξεκινούν με τις καταλήξεις: .gr, .com.gr, .net.gr, .org.gr, .edu.gr, .gov.gr
 Αν υπάρχουν ήδη, αντικαθιστούμε τις γραμμές με τις παρακάτω, αλλιώς απλά προσθέτουμε τις πατακάτω στο τέλος του αρχείου.
 ```
 .gr|https://www.pointer.gr/el/domain-names/publicwhois/|HTTPREQUEST-Domain does not exist.
@@ -19,9 +19,9 @@
 
 4) Έχουμε δύο περιπτώσεις ανάλογα με την έκδοση του whmcs:
 
-Για εκδόσεις από 7.0 και άνω: Ανεβάζουμε το αρχείο additionalfields.php στον φάκελο /resources/domains/
+-Για εκδόσεις από 7.0 και άνω: Ανεβάζουμε το αρχείο additionalfields.php στον φάκελο /resources/domains/
 
-Για εκδόσεις πριν την 7.0: Προσθέτουμε στο τέλος του αρχείου includes/additionaldomainfields.php τον παρακάτω κώδικα: 
+-Για εκδόσεις πριν την 7.0: Προσθέτουμε στο τέλος του αρχείου includes/additionaldomainfields.php τον παρακάτω κώδικα: 
 ```php
 if (file_exists(dirname(__FILE__) . "/../modules/registrars/pointer/additionaldomainfields.php")) {
     include dirname(__FILE__) . "/../modules/registrars/pointer/additionaldomainfields.php";
