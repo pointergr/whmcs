@@ -1,0 +1,28 @@
+{
+    "name": "pointergr/whmcs",
+    "description": "WHMCS module for registrar www.pointer.gr",
+    "keywords": [
+        "whmcs",
+        "web host automation platform",
+        "registrar module",
+        "domain registrar module",
+        "pointer.gr"
+    ],
+    "homepage": "https://www.pointer.gr/",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Thomas Papamichail",
+            "email": "thomas@pointer.gr",
+            "homepage": "https://www.pointer.gr",
+            "role": "Developer"
+        }
+    ],
+    "support": {
+        "email": "support@pointer.gr",
+        "forum": "https://helpdesk.pointer.gr"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "@stable"
+    }
+}

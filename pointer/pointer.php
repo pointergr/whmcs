@@ -1,10 +1,11 @@
 <?php
+use WHMCS\Domain\TopLevel\ImportItem;
+use WHMCS\Results\ResultsList;
 
 function pointer_getConfigArray() {
     $configarray = array(
         "Username" => array("Type" => "text", "Size" => "20", "Description" => "Enter your reseller username here"),
         "Password" => array("Type" => "password", "Size" => "20", "Description" => "Enter your reseller password here"),
-        "TestMode" => array("FriendlyName" => "Test Mode", "Type" => "yesno", "Description" => "")
     );
     return $configarray;
 }
@@ -63,6 +64,57 @@ function pointer_Sync($params) {
         'expirydate' => date('Y-m-d', $expiryDate)
     );
 
+}
+
+function pointer_GetTldPricing(array $params) {
+    ini_set('display_errors', 1);
+    error_reporting(E_ALL);
+
+    $username = $params["Username"];
+    $password = $params["Password"];
+    $url = getUrl($params);
+
+    //GET DOMAIN INFO
+    $chksum = md5($username . $password . 'getProducts');
+    $xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
+            <pointer>
+                <products></products>
+                <username>{$username}</username>
+                <chksum>{$chksum}</chksum>
+            </pointer>";
+
+    $curl = curl_init();
+    curl_setopt($curl, CURLOPT_URL, $url);
+    curl_setopt($curl, CURLOPT_HTTPHEADER, Array("Content-Type:text/xml"));
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($curl, CURLOPT_HEADER, 0);
+    curl_setopt($curl, CURLOPT_POST, 1);
+    curl_setopt($curl, CURLOPT_POSTFIELDS, $xml); // post the xml
+    curl_setopt($curl, CURLOPT_TIMEOUT, 120); // set timeout in secon
+
+    $result = curl_exec($curl);
+    $resp = new SimpleXMLElement($result);
+
+    $results = new ResultsList;
+
+    foreach($resp->products->item as $product) {
+        if($product->categoryId==1) {
+
+            $item = (new ImportItem)
+                ->setExtension((string)$product->tld)
+                ->setMinYears((integer)$product->min_months/12)
+                ->setMaxYears((integer)$product->max_months/12)
+                ->setRegisterPrice((float)$product->prices->item[0]->registrationPrice)
+                ->setRenewPrice((float)$product->prices->item[0]->renewPrice)
+                ->setTransferPrice((float)$product->transferPrice)
+                ->setCurrency('EUR')
+                ->setEppRequired(true);
+
+            $results[] = $item;
+        }
+    }
+
+    return $results;
 }
 
 function pointer_GetNameservers($params) {
@@ -1516,7 +1568,6 @@ function pointer_RegisterNameserver($params) {
 function getExpireDate($params) {
     $username = $params["Username"];
     $password = $params["Password"];
-    $testmode = (isset($params["TestMode"]) && $params["TestMode"]) ? TRUE : FALSE;
     $action = $params['action'];
     $domain = $params['domain'];
     $key = $params['key'];
@@ -1643,13 +1694,7 @@ function logout($username, $password, $url, $key) {
 }
 
 function getUrl($params) {
-    $testmode = (isset($params["TestMode"]) && $params["TestMode"]) ? TRUE : FALSE;
-    if ($testmode) {
-        $url = "http://devpointer.ngrok.com/admin/reseller";
-    } else {
-        $url = "https://www.pointer.gr/api";
-    }
-    return $url;
+    return "https://www.pointer.gr/api";
 }
 
 ?>
