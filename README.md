@@ -1,3 +1,7 @@
+# Τι είναι
+Με αυτό το plugin καλείτε το API της https://www.pointer.gr μέσα από το WHMCS
+
+
 # Εγκατάσταση
 
 1) Ανεβάζουμε τον φάκελο pointer στον φάκελο /modules/registrars/
