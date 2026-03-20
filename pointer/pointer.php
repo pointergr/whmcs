@@ -55,13 +55,16 @@ function pointer_Sync($params) {
     $active = (int)$resp_xml->domain->active;
     $expired = (int)$resp_xml->domain->expired;
     $expiryDate = (int)$resp_xml->domain->end_date;
+	$transferredAway = (int)$resp_xml->domain->transferred_out;
 
     call_user_func_array('logout', array($username, $password, $url, $key));
 
     return array(
         'active' => ($active) ? true : false,
         'expired' => ($expired) ? true : false,
-        'expirydate' => date('Y-m-d', $expiryDate)
+        'expirydate' => date('Y-m-d', $expiryDate),
+		'transferredAway' => ($transferredAway) ? true : false,
+		'cancelled' => false
     );
 
 }
